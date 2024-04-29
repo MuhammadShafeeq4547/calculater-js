@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculater</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main {
+            width: 100%;
+            height: 100vh;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .p {
+            font-size: 30px;
+            font-weight: 500;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .parent {
+            width: 400px;
+            height: 400px;
+            background-color: greenyellow;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+
+        .output {
+            height: 40px;
+            line-height: 40px;
+            background-color: white;
+            text-align: right;
+            padding: 0 10px;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+
+        .add {
+            width: 100%;
+            background-color: white;
+            margin-top: 10px;
+            display: flex;
+        }
+
+        .btn_div {
+            width: 50px;
+            height: 50px;
+            padding: 7px;
+            background-color: black;
+            text-align: center;
+            font-size: 25px;
+            cursor: pointer;
+            margin: 10px 10px;
+            color: white;
+        }
+
+        .btn_div:hover {
+            background-color: red;
+        }
+
+        @media screen and (max-width:550px) {
+            .parent{
+                width: 90%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <header class="main">
+        <p class="p">Calculater</p>
+        <div class="parent"></div>
+    </header>
+
+
+    <script>
+
+        let Parent = document.querySelector(".parent")
+        let Object1 = [["1", "2", "3", "+"], ["4", "5", "6", "-"], ["7", "8", "9", "*"], ["C", "0", "=", "/"]]
+        let Operat = ["+", "-", "*", "/"];
+        let outPut;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            outPut = document.createElement("div")
+            outPut.innerHTML = "0"
+            outPut.classList.add("output")
+            Parent.appendChild(outPut)
+
+            for (let s = 0; s < Object1.length; s++) {
+                let Div = document.createElement("div")
+                Div.classList.add("add")
+                Parent.appendChild(Div)
+                for (let L = 0; L < Object1[s].length; L++) {
+                    let btn = document.createElement("div")
+                    btn.classList.add("btn_div")
+                    btn.innerHTML = Object1[s][L]
+                    Div.appendChild(btn)
+                    btn.addEventListener("click", Update)
+                }
+            }
+        })
+
+        function Update(s) {
+            let ClickValue = this.innerText
+            let OutPut = outPut.innerText
+            if (OutPut == "0") {
+                OutPut = ""
+            }
+            if (ClickValue == "=") {
+                OutPut = eval(OutPut)
+            }
+            else {
+                let Last = OutPut.substring(OutPut.length - 1)
+                if (Operat.includes(ClickValue)) {
+                    if (Operat.includes(Last)) {
+                        OutPut = OutPut.substring(0, OutPut.length - 1)
+                    }
+                    else {
+                        OutPut = eval(OutPut)
+                    }
+                }
+                OutPut = OutPut + ClickValue
+            }
+            if (ClickValue == "C") {
+                OutPut = 0
+            }
+            outPut.innerHTML = OutPut
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>
